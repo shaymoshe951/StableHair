@@ -144,14 +144,14 @@ def model_call(id_image, ref_hair, converter_scale, scale, guidance_scale, contr
     return id_image_bald, image
 
 # Create a Gradio interface
-image1 = gr.inputs.Image(label="id_image")
-image2 = gr.inputs.Image(label="ref_hair")
-number0 = gr.inputs.Slider(minimum=0.5, maximum=1.5, default=1, label="Converter Scale")
-number1 = gr.inputs.Slider(minimum=0.0, maximum=3, default=1.0, label="Hair Encoder Scale")
-number2 = gr.inputs.Slider(minimum=1.1, maximum=3.0, default=1.5, label="CFG")
-number3 = gr.inputs.Slider(minimum=0.1, maximum=2.0, default=1, label="Latent IdentityNet Scale")
-output1 = gr.outputs.Image(type="pil", label="Bald_Result")
-output2 = gr.outputs.Image(type="pil", label="Transfer Result")
+image1 = gr.Image(label="id_image")
+image2 = gr.Image(label="ref_hair")
+number0 = gr.Slider(minimum=0.5, maximum=1.5, value=1, label="Converter Scale")
+number1 = gr.Slider(minimum=0.0, maximum=3, value=1.0, label="Hair Encoder Scale")
+number2 = gr.Slider(minimum=1.1, maximum=3.0, value=1.5, label="CFG")
+number3 = gr.Slider(minimum=0.1, maximum=2.0, value=1, label="Latent IdentityNet Scale")
+output1 = gr.Image(type="pil", label="Bald_Result")
+output2 = gr.Image(type="pil", label="Transfer Result")
 
 iface = gr.Interface(
     fn=lambda id_image, ref_hair, num0, num1, num2, num3, : model_call(id_image, ref_hair, num0, num1, num2, num3),
@@ -162,4 +162,5 @@ iface = gr.Interface(
 )
 
 # Launch the Gradio interface
-iface.queue().launch(server_name='0.0.0.0', server_port=8986)
+# iface.queue().launch(server_name='0.0.0.0', server_port=8986)
+iface.queue().launch(share=True)
