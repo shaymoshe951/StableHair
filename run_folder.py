@@ -13,6 +13,7 @@ from ref_encoder.adapter import *
 from ref_encoder.reference_unet import ref_unet
 from utils.pipeline import StableHairPipeline
 from utils.pipeline_cn import StableDiffusionControlNetPipeline
+from tqdm import tqdm
 
 def concatenate_images(image_files, output_file, type="pil"):
     if type == "np":
@@ -151,7 +152,7 @@ def run_all():
     ref_files = _get_images_filenames_in_folder(os.path.join(folder_path, 'Ref'))
 
     os.makedirs(output_path, exist_ok=True)
-    for id_image in source_files:
+    for id_image in tqdm(source_files):
         for ref_hair in ref_files:
             # id_image = './test_imgs/ID/0.jpg'
             # ref_hair = './test_imgs/Ref/0.jpg'
