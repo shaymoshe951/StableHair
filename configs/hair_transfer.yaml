@@ -1,10 +1,10 @@
 pretrained_model_path: "runwayml/stable-diffusion-v1-5"  # your sd path
 
-pretrained_folder: "./models/stage2"
+pretrained_folder: "/workspace/Projects/Stable-Hair/models/stage2"
 encoder_path: "pytorch_model.bin"
 adapter_path: "pytorch_model_1.bin"
 controlnet_path: "pytorch_model_2.bin"
-bald_converter_path: "./models/stage1/pytorch_model.bin"
+bald_converter_path: "/workspace/Projects/Stable-Hair/models/stage1/pytorch_model.bin"
 
 fusion_blocks: "full"
 

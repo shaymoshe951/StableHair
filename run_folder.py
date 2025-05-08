@@ -137,15 +137,15 @@ class StableHair:
 
 def _get_images_filenames_in_folder(folder_path):
     files = os.listdir(folder_path)
-    jpg_files = [os.path.join(folder_path,f) for f in files if f.endswith('.jpg') and os.path.isfile(os.path.join(folder_path, f))]
+    jpg_files = [os.path.join(folder_path,f) for f in files if (f.endswith('.png') or f.endswith('.jpeg')) and os.path.isfile(os.path.join(folder_path, f))]
     return jpg_files
 
 
 def run_all():
-    folder_path = './test_imgs/'
+    folder_path = '/workspace/Projects/Stable-Hair/test_imgs/'
     output_path = '/workspace/Projects/Stable-Hair/output'
 
-    model = StableHair(config="./configs/hair_transfer.yaml", weight_dtype=torch.float32)
+    model = StableHair(config="/workspace/Projects/Stable-Hair/configs/hair_transfer.yaml", weight_dtype=torch.float32)
 
 
     source_files = _get_images_filenames_in_folder(os.path.join(folder_path, 'ID'))
@@ -159,13 +159,14 @@ def run_all():
             # id_image = os.path.join(folder_path, 'ID', id_image_name)
             # ref_hair = os.path.join(folder_path, 'Ref', ref_hair_name)
             # kwargs = OmegaConf.to_container(model.config.inference_kwargs)
-            id, image, source_image_bald, reference_image = model.Hair_Transfer(id_image, ref_hair, random_seed = -1, step = 30, guidance_scale = 1.5, scale = 1, controlnet_conditioning_scale = 1, size = 512)
+            id, image, source_image_bald, reference_image = model.Hair_Transfer(id_image, ref_hair, random_seed = -1, step = 40, guidance_scale = 1.5, scale = 1, controlnet_conditioning_scale = 1, size = 512)
             nsrc = os.path.basename(id_image).split('.')[0]
             nref = os.path.basename(ref_hair).split('.')[0]
             save_name = nsrc+'_'+nref+'.jpg'
             print(save_name)
             output_file = os.path.join(output_path, save_name)
-            concatenate_images([id, source_image_bald, reference_image, (image*255.).astype(np.uint8)], output_file=output_file, type="np")
+            # concatenate_images([id, source_image_bald, reference_image, (image*255.).astype(np.uint8)], output_file=output_file, type="np")
+            concatenate_images([id, reference_image, (image*255.).astype(np.uint8)], output_file=output_file, type="np")
 
 
 if __name__ == '__main__':
