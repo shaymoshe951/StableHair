@@ -60,7 +60,7 @@ class BaseOutput(OrderedDict):
         if is_torch_available():
             import torch.utils._pytree
 
-            torch.utils._pytree._register_pytree_node(
+            torch.utils._pytree.register_pytree_node(
                 cls,
                 torch.utils._pytree._dict_flatten,
                 lambda values, context: cls(**torch.utils._pytree._dict_unflatten(values, context)),
